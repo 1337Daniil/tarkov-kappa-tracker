@@ -1,0 +1,15 @@
+# Виртулаьное окружение - пересоздается через pip install 
+venv/
+
+# Кэш Python
+__pycache__/
+
+# Личные данные - у каждого свои 
+data/progress.json
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Настройка VS code 
+.vscode/

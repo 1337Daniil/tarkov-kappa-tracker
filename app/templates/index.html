@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — Tarkov Kappa Tracker{% endblock %}
+{% block progress_bar %}
+<div class="progress-bar-container">
+    <div class="progress-bar-fill" style="width: {{ (completed_count / total_kappa * 100) | round(1) }}%"></div> 
+    <span class="progress-bar-text">{{ completed_count }} / {{ total_kappa}}</span>
+</div>
+{% endblock %}
+
+
+
+{% block content %}
+<section class="stats">
+    <h2>Прогресс до Kappa</h2>
+    <p class="progress">
+        Выполнено: <strong id="completed-count">{{ completed_count }}</strong> 
+        из <strong>{{ total_kappa }}</strong>
+    </p>
+    <p>Фракция: <strong>{{ faction }}</strong> • Уровень: <strong>{{ level }}</strong></p>
+</section>
+<section class="settings">
+    <h2>Настройки персонажа</h2>
+    <form id="settings-form">
+        <label class="field">
+            Фракция:
+            <select name="faction" id="faction-select">
+                <option value="USEC" {% if faction == "USEC" %}selected{% endif %}>USEC</option>
+                <option value="BEAR" {% if faction == "BEAR" %}selected{% endif %}>BEAR</option>
+            </select>
+        </label>
+
+        <label class="field">
+            Уровень:
+            <input type="number" name="level" id="level-input"
+                   min="1" max="79" value="{{ level }}">
+        </label>
+
+        <button type="submit">Сохранить</button>
+        <span id="settings-status" class="settings-status"></span>
+    </form>
+</section>
+
+<section class="available">
+    <h2>Доступно сейчас (<span id="available-count">{{ available|length }}</span>)</h2>
+
+    {% if available %}
+    <ul class="quest-list" id="quest-list">
+        {% for quest in available %}
+<li data-quest-id="{{ quest.id }}">
+    <input type="checkbox" class="quest-checkbox" data-quest-id="{{ quest.id }}">
+    <span class="trader">[{{ quest.trader }}]</span>
+    <a href="/quest/{{ quest.id }}" class="name quest-link">{{ quest.name }}</a>
+    {% if quest.map %}
+    <span class="map">— {{ quest.map }}</span>
+    {% endif %}
+</li>
+{% endfor %}
+    </ul>
+    {% else %}
+    <p>Нет доступных квестов. Возможно, нужно повысить уровень.</p>
+    {% endif %}
+</section>
+
+<script src="/static/app.js"></script>
+{% endblock %}

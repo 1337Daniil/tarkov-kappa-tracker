@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Дерево квестов — Tarkov Kappa Tracker{% endblock %}
+{% block progress_bar %}
+<div class="progress-bar-container">
+    <div class="progress-bar-fill" style="width: {{ (completed_count  / total_kappa * 100) | round(1)}}%"></div>
+    <span class="progress-bar-text">{{ completed_count }} / {{ total_kappa }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="tree-section">
+    <h2>Дерево квестов до Kappa</h2>
+    <div class="legend">
+        <span class="legend-item"><span class="dot completed"></span> Выполнено</span>
+        <span class="legend-item"><span class="dot available"></span> Доступно</span>
+        <span class="legend-item"><span class="dot locked"></span> Заблокировано</span>
+    </div>
+    <p class="hint">
+        Колёсико — зум, перетаскивание — панорамирование.
+        Клик на квест — подсветить цепочку предшественников.
+    </p>
+
+    <div id="cy"></div>
+
+    <div id="quest-info" class="quest-info hidden">
+        <h3 id="info-name"></h3>
+        <p>Торговец: <strong id="info-trader"></strong></p>
+        <p>Статус: <strong id="info-status"></strong></p>
+        <p>Предшественников: <strong id="info-predecessors"></strong></p>
+    </div>
+</section>
+
+<!-- Cytoscape.js и плагин dagre с CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+
+<script src="/static/tree.js"></script>
+{% endblock %}

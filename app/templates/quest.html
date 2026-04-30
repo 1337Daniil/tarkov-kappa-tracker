@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}{{ name }} — Tarkov Kappa Tracker{% endblock %}
+
+{% block content %}
+<section class="quest-detail">
+    <div class="quest-header">
+        <h2>{{ name }}</h2>
+        {% if is_completed %}
+        <span class="badge completed-badge">Выполнено ✓</span>
+        {% endif %}
+        {% if kappa_required %}
+        <span class="badge kappa-badge">Нужен для Kappa</span>
+        {% endif %}
+    </div>
+
+    <div class="quest-meta">
+        <span>Торговец: <strong>{{ trader }}</strong></span>
+        {% if map %}
+        <span>Карта: <strong>{{ map }}</strong></span>
+        {% endif %}
+        <span>Мин. уровень: <strong>{{ min_level }}</strong></span>
+        {% if faction != "Any" %}
+        <span>Фракция: <strong>{{ faction }}</strong></span>
+        {% endif %}
+        {% if experience %}
+        <span>Опыт: <strong>{{ experience }} XP</strong></span>
+        {% endif %}
+    </div>
+
+    {% if wiki_link %}
+    <p><a href="{{ wiki_link }}" target="_blank" class="wiki-link">Открыть на вики ↗</a></p>
+    {% endif %}
+</section>
+
+{% if objectives %}
+<section class="quest-section">
+    <h3>Задачи</h3>
+    <ul class="objectives-list">
+        {% for obj in objectives %}
+        <li class="{% if obj.optional %}optional{% endif %}">
+            <span class="obj-description">{{ obj.description }}</span>
+            {% if obj.optional %}
+            <span class="obj-tag optional-tag">необязательно</span>
+            {% endif %}
+            {% if obj.maps %}
+            <span class="obj-tag map-tag">
+                {% for m in obj.maps %}{{ m.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+            </span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if needed_keys %}
+<section class="quest-section">
+    <h3>Необходимые ключи</h3>
+    <ul class="keys-list">
+        {% for key in needed_keys %}
+        <li>
+            {{ key.name }}
+            {% if key.wiki %}
+            <a href="{{ key.wiki }}" target="_blank" class="wiki-link">вики ↗</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if predecessors %}
+<section class="quest-section">
+    <h3>Требуется выполнить до</h3>
+    <ul class="quest-links">
+        {% for pred in predecessors %}
+        <li>
+            <a href="/quest/{{ pred.id }}">{{ pred.name }}</a>
+            {% if pred.completed %}
+            <span class="done-mark">✓</span>
+            {% else %}
+            <span class="pending-mark">✗</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if unlocks %}
+<section class="quest-section">
+    <h3>Разблокирует квесты</h3>
+    <ul class="quest-links">
+        {% for unlock in unlocks %}
+        <li>
+            <a href="/quest/{{ unlock.id }}">{{ unlock.name }}</a>
+            {% if unlock.completed %}
+            <span class="done-mark">✓</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if reward_items or trader_unlocks %}
+<section class="quest-section">
+    <h3>Награды</h3>
+    {% if reward_items %}
+    <ul class="rewards-list">
+        {% for item in reward_items %}
+        <li>{{ item.name }} × {{ item.count }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if trader_unlocks %}
+    <p>Разблокирует торговцев: <strong>{{ trader_unlocks|join(", ") }}</strong></p>
+    {% endif %}
+</section>
+{% endif %}
+
+<div class="back-link">
+    <a href="/">← Вернуться на главную</a>
+</div>
+{% endblock %}
