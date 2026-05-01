@@ -21,16 +21,12 @@
 
 ```bash
 # Клонировать проект
-git clone https://github.com/ТВОЙ_ЛОГИН/tarkov-kappa-tracker.git
+git clone git@github.com:1337Daniil/tarkov-kappa-tracker.git
 cd tarkov-kappa-tracker
 
 # Создать виртуальное окружение
-python -m venv venv
-venv\Scripts\Activate.ps1     # Windows
-source venv/bin/activate       # Linux/Mac
-
-# Установить зависимости
-pip install -r requirements.txt
+poetry install
+poetry env activate
 
 # Обновить данные квестов (необязательно, quests.json уже в репо)
 python -m app.tarkov_api
