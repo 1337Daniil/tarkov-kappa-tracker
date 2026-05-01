@@ -28,9 +28,6 @@ cd tarkov-kappa-tracker
 poetry install
 poetry env activate
 
-# Установить зависимости
-pip install -r requirements.txt
-
 # Обновить данные квестов (необязательно, quests.json уже в репо)
 python -m app.tarkov_api
 
