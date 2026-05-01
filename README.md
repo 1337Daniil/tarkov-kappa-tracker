@@ -21,7 +21,7 @@
 
 ```bash
 # Клонировать проект
-git clone https://github.com/ТВОЙ_ЛОГИН/tarkov-kappa-tracker.git
+git clone git@github.com:1337Daniil/tarkov-kappa-tracker.git
 cd tarkov-kappa-tracker
 
 # Создать виртуальное окружение
