@@ -25,9 +25,8 @@ git clone https://github.com/ТВОЙ_ЛОГИН/tarkov-kappa-tracker.git
 cd tarkov-kappa-tracker
 
 # Создать виртуальное окружение
-python -m venv venv
-venv\Scripts\Activate.ps1     # Windows
-source venv/bin/activate       # Linux/Mac
+poetry install
+poetry env activate
 
 # Установить зависимости
 pip install -r requirements.txt
